@@ -4,6 +4,13 @@
 It provides a beautiful user experience with advanced features like product filtering, cart management, secure checkout, and role-based admin control.
 
 ---
+## 🌐 Live Demo
+
+Check out the live version of **E-Bazaar** here:  
+[Visit E-Bazaar](https://e-bazaar-client.vercel.app/)
+
+![E-Bazaar Screenshot](https://i.postimg.cc/GhyKGgfB/e-bazaar.png)
+
 
 ## 🚀 Features
 
