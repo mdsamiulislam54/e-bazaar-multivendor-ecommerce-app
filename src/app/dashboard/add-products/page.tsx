@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
 import { Tag, PackagePlus, } from "lucide-react";
 import { CiImageOn } from "react-icons/ci";
+import instance from "@/lib/axios";
 
 interface ProductFormInputs {
   title: string;
@@ -44,8 +45,8 @@ const ProductForm = () => {
             : [],
       };
 
-      const res = await axios.post(
-        "https://e-bazaar-server-three.vercel.app/admin/add-products",
+      const res = await instance.post(
+        "/admin/add-products",
         payload,
         {withCredentials:true}
       );

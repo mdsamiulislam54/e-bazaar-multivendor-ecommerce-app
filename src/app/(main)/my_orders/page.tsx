@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "../loading";
@@ -11,10 +10,10 @@ import UserOrdersTable from "@/Components/UserOrders/UserOrdersTable/UserOrdersT
 import Pagination from "@/Components/Pagination/Pagination";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Order } from "@/lib/orders";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useReactToPrint } from "react-to-print";
+import instance from "@/lib/axios";
 
 interface Summary {
     totalOrders: number;
@@ -44,8 +43,8 @@ const MyOrdersPage = () => {
         if (!session?.user?.email) return;
         try {
             setLoading(true);
-            const res = await axios.get(
-                `https://e-bazaar-server-three.vercel.app/user-orders?email=${session.user.email}&page=${currentPage}`, 
+            const res = await instance.get(
+                `/user-orders?email=${session.user.email}&page=${currentPage}`, 
                 {withCredentials:true}
             );
             
@@ -96,7 +95,7 @@ const MyOrdersPage = () => {
             if (result.isConfirmed) {
                 try {
 
-                    const res = await axios.delete(`https://e-bazaar-server-three.vercel.app/user/order/${id}`,{withCredentials:true});
+                    const res = await instance.delete(`/user/order/${id}`,{withCredentials:true});
                     if (res.status === 200) {
                         toast.success("Your order has been cancel.");
                         getOrder();

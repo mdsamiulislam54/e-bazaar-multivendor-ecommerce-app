@@ -12,7 +12,7 @@ const Blogpage = () => {
 
   const getBlogsData = useCallback(async () => {
     try {
-      const res = await fetch(`https://e-bazaar-server-three.vercel.app/blogs?page=${currentPage}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blogs?page=${currentPage}`, {
         cache: "no-store",
       });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -31,8 +31,41 @@ const Blogpage = () => {
   return (
     <div className="min-h-screen dark:text-white ">
 
-      <nav className='bg-cover w-full h-[200px]' style={{ backgroundImage: `url("https://preview.colorlib.com/theme/cozastore/images/bg-01.jpg.webp")` }}>
-        <h2 className='flex justify-center items-center h-full text-2xl font-bold text-white tracking-wide'>Blogs</h2>
+      <nav
+        className="
+        relative w-full h-[220px]
+        flex items-center justify-center
+        overflow-hidden
+        bg-black text-white
+    "
+      >
+        {/* background image */}
+        <div
+          className="
+            absolute inset-0
+            bg-[url('https://images.unsplash.com/photo-1521334884684-d80222895322')]
+            bg-cover bg-center
+            grayscale
+            scale-110
+        "
+        />
+
+        {/* dark overlay */}
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+
+        {/* content */}
+        <div className="relative z-10 text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-widest uppercase">
+            Blogs
+          </h2>
+
+          <p className="text-sm text-gray-300 mt-2 tracking-wide">
+            Insights, Stories & Updates
+          </p>
+        </div>
+
+        {/* subtle bottom line */}
+        <div className="absolute bottom-0 w-full h-[1px] bg-white/10" />
       </nav>
 
 
@@ -46,88 +79,174 @@ const Blogpage = () => {
           </div>
 
 
-          <aside className="lg:col-span-2 w-full">
-            {/*  Search */}
-            <div className="mb-6">
+          <aside className="lg:col-span-2 w-full space-y-6">
+
+            {/* SEARCH */}
+            <div className="
+        p-4 rounded-2xl
+        bg-white/10 dark:bg-white/5
+        backdrop-blur-xl
+        border border-black/10 dark:border-white/10
+        shadow-sm
+    ">
               <label className="relative block">
+                <svg
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <circle cx="11" cy="11" r="8" strokeWidth="2" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" strokeWidth="2" />
+                </svg>
+
                 <input
                   type="search"
-                  placeholder="Search..."
-                  className="w-full input pl-10 border rounded-lg py-2 dark:bg-gray-800 dark:text-white"
+                  placeholder="Search blogs..."
+                  className="
+                    w-full pl-10 pr-4 py-3
+                    rounded-xl
+                    bg-white dark:bg-black
+                    text-black dark:text-white
+                    border border-black/10 dark:border-white/10
+                    outline-none
+                    focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20
+                    transition
+                "
                 />
-                <svg
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-800 dark:text-gray-200"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
               </label>
             </div>
 
+            {/* CATEGORIES */}
+            <div className="
+        p-5 rounded-2xl
+        bg-white/10 dark:bg-white/5
+        backdrop-blur-xl
+        border border-black/10 dark:border-white/10
+    ">
+              <h2 className="text-lg font-bold mb-4 tracking-tight">
+                Categories
+              </h2>
 
-            <div className="p-4 bg-white shadow dark:bg-gray-800 dark:text-white rounded-box mb-6">
-              <h2 className="text-lg sm:text-xl font-bold mb-3 border-b pb-2">Fashion Categories</h2>
-              <ul className="space-y-2 text-sm sm:text-base">
-                <li className="cursor-pointer ">Women’s Fashion</li>
-                <li className="cursor-pointer ">Men’s Style & Grooming</li>
-                <li className="cursor-pointer ">Trends & Lifestyle</li>
-                <li className="cursor-pointer ">Accessories & Styling Tips</li>
-                <li className="cursor-pointer ">Sustainable & Ethical Fashion</li>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "Women’s Fashion",
+                  "Men’s Style & Grooming",
+                  "Trends & Lifestyle",
+                  "Accessories & Styling Tips",
+                  "Sustainable Fashion",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="
+                        px-3 py-2 rounded-lg
+                        cursor-pointer
+                        text-gray-700 dark:text-gray-300
+                        hover:bg-black/5 dark:hover:bg-white/10
+                        hover:translate-x-1
+                        transition
+                    "
+                  >
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            Latest Blogs
-            <div className="p-4 bg-white shadow dark:bg-gray-800 dark:text-white rounded-box mb-6">
-              <h2 className="mb-4 text-lg sm:text-xl font-bold border-b pb-2">Latest Blogs</h2>
-              {blogs?.slice(0, 6).map((blog) => (
-                <div key={blog._id} className="flex gap-3 mb-4 items-start">
-                  <Image
-                    src={blog.image}
-                    width={80}
-                    height={80}
-                    alt={blog.title}
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
-                  <div>
-                    <p className="text-sm sm:text-base line-clamp-2">{blog.shortDescription}</p>
-                    <button className='text-xs my-1 p-x-2 bg-gray-200 p-1 rounded-box dark:bg-gray-700 dark:text-white cursor-pointer'>See More</button>
+            {/* LATEST BLOGS */}
+            <div className="
+        p-5 rounded-2xl
+        bg-white/10 dark:bg-white/5
+        backdrop-blur-xl
+        border border-black/10 dark:border-white/10
+    ">
+              <h2 className="text-lg font-bold mb-4 tracking-tight">
+                Latest Posts
+              </h2>
+
+              <div className="space-y-4">
+                {blogs?.slice(0, 5).map((blog) => (
+                  <div
+                    key={blog._id}
+                    className="flex gap-3 group"
+                  >
+                    <Image
+                      src={blog.image}
+                      width={70}
+                      height={70}
+                      alt={blog.title}
+                      className="
+                            w-16 h-16
+                            rounded-xl
+                            object-cover
+                            group-hover:scale-105
+                            transition duration-300
+                        "
+                    />
+
+                    <div className="flex-1">
+                      <p className="text-sm line-clamp-2 text-gray-700 dark:text-gray-300">
+                        {blog.shortDescription}
+                      </p>
+
+                      <button className="
+                            mt-1 text-xs font-medium
+                            text-black dark:text-white
+                            hover:opacity-60
+                            transition
+                        ">
+                        Read More →
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* 🏷️ Tags */}
-            <div className="p-4 bg-white shadow dark:bg-gray-800 dark:text-white rounded-box">
-              <h2 className="text-lg sm:text-xl font-bold mb-3 border-b pb-2">Popular Tags</h2>
+            {/* TAGS */}
+            <div className="
+        p-5 rounded-2xl
+        bg-white/10 dark:bg-white/5
+        backdrop-blur-xl
+        border border-black/10 dark:border-white/10
+    ">
+              <h2 className="text-lg font-bold mb-4 tracking-tight">
+                Popular Tags
+              </h2>
+
               <div className="flex flex-wrap gap-2">
                 {[
                   "#StreetStyle",
-                  "#SummerCollection",
-                  "#CasualWear",
-                  "#ModernLook",
-                  "#VintageVibes",
-                  "#WinterFashion",
-                  "#LuxuryStyle",
+                  "#Summer",
+                  "#Minimal",
+                  "#Luxury",
                   "#OOTD",
-                  "#MinimalDesign",
-                  "#FashionTrends",
+                  "#Trends",
+                  "#Vintage",
+                  "#Fashion",
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-600 hover:text-white cursor-pointer transition-all duration-300"
+                    className="
+                        px-3 py-1 text-xs font-medium
+                        rounded-full
+                        border border-black/10 dark:border-white/10
+                        bg-white dark:bg-black
+                        text-black dark:text-white
+                        hover:scale-105
+                        hover:bg-black hover:text-white
+                        dark:hover:bg-white dark:hover:text-black
+                        transition
+                        cursor-pointer
+                    "
                   >
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
+
           </aside>
         </div>
       </div>

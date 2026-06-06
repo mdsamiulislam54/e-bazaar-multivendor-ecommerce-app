@@ -1,6 +1,7 @@
 "use client"
 import ProductsTable from '@/Components/Dashboard/ProductsTablea/ProductsTablea';
 import Pagination from '@/Components/Pagination/Pagination';
+import instance from '@/lib/axios';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
@@ -14,7 +15,7 @@ const ProductsList = () => {
     const [search, setSearch] = useState('')
 
     const getProductsData = useCallback(async () => {
-        const res = await axios.get(`https://e-bazaar-server-three.vercel.app/admin/products/list?page=${currentPage}&sort=${sort}&search=${search}`, {withCredentials:true});
+        const res = await instance.get(`/admin/products/list?page=${currentPage}&sort=${sort}&search=${search}`, {withCredentials:true});
         const data = res?.data;
         setProducts(data?.products);
         setPageArray(data?.pageArray)
@@ -37,7 +38,7 @@ const ProductsList = () => {
             if (result.isConfirmed) {
                 try {
 
-                    const res = await axios.delete(`https://e-bazaar-server-three.vercel.app/admin/products/${id}`);
+                    const res = await instance.delete(`/admin/products/${id}`);
                     if(res.status === 200){
                     toast.success("Your product has been deleted.");
                     getProductsData();

@@ -16,6 +16,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import instance from '@/lib/axios';
 const PaymentProcess = () => {
     const deliveryDate = useDeliveryDate(2)
     const {data:session} = useSession()
@@ -101,7 +102,7 @@ const PaymentProcess = () => {
                 updatedAt: new Date().toISOString(),
             };
 
-            const res = await axios.post('https://e-bazaar-server-three.vercel.app/order', { orderDetails })
+            const res = await instance.post('/order', { orderDetails })
        
             if (res.status === 200) {
                 toast.success('Your Order Place Successfully!')

@@ -10,6 +10,8 @@ import axios from 'axios';
 import Pagination from '@/Components/Pagination/Pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Loader from '@/Components/Loader/Loader';
+import axiosInstance from '@/lib/axios';
+import instance from '@/lib/axios';
 const Shopping = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get('search') || '';
@@ -33,9 +35,6 @@ const Shopping = () => {
     const fetchData = useCallback(async () => {
         try {
             setLoading(true)
-
-
-
             const params = new URLSearchParams();
             if (sort) params.set('sort', sort);
             if (selectedCategory) params.set('category', selectedCategory);
@@ -45,7 +44,7 @@ const Shopping = () => {
             params.set('limit', '12');
             if (search) params.set('search', search);
 
-            const res = await axios.get(`https://e-bazaar-server-three.vercel.app/shopping?${params.toString()}`, {
+            const res = await instance.get(`/shopping?${params.toString()}`, {
                 withCredentials:true
             });
 

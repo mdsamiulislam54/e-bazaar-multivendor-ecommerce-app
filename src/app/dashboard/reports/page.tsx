@@ -5,6 +5,7 @@ import { FaDollarSign, FaUsers, FaBox, FaShoppingCart } from "react-icons/fa";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 import RevenuneChart from "../../../Components/Dashboard/Reports/RevenuneChart/RevenuneChart";
 import TopSellingProducts from "@/Components/Dashboard/Reports/TopSellingProducts/TopSellingProducts";
+import instance from "@/lib/axios";
 
 interface RevenueData {
   _id: { day: number; month: number; year: number };
@@ -43,7 +44,7 @@ const ReportPage: React.FC = () => {
 
   const getReport = useCallback(async () => {
     try {
-      const res = await axios.get("https://e-bazaar-server-three.vercel.app/admin/report",{withCredentials:true});
+      const res = await instance.get("/admin/report", {withCredentials:true});
       if (res.status === 200) {
         setReport(res.data);
       }

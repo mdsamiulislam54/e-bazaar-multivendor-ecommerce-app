@@ -2,6 +2,7 @@
 
 import OrderContainer from '@/Components/Dashboard/Orders/OrderContainer/OrderContainer'
 import Pagination from '@/Components/Pagination/Pagination'
+import instance from '@/lib/axios'
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 
@@ -13,7 +14,7 @@ const AdminOrdersPage = () => {
     const [sort, setSort] = useState('latest')
 
     const getOrders = useCallback(async()=>{
-        const res = await axios.get(`https://e-bazaar-server-three.vercel.app/admin/order?search=${search}&sort=${sort}&page=${currentPage}`, {withCredentials:true});
+        const res = await instance.get(`/admin/order?search=${search}&sort=${sort}&page=${currentPage}`, {withCredentials:true});
         if(res.status === 200){
             setOrders(res?.data.order);
             setPageArray(res?.data?.pageArray)

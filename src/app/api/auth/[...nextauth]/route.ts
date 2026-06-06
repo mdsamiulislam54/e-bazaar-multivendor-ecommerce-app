@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import axios from 'axios'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import instance from '@/lib/axios'
 
 declare module 'next-auth' {
   interface User {
@@ -38,7 +39,7 @@ const handler = NextAuth({
             email: credentials?.email,
             password: credentials?.password
           }
-          const res = await axios.post(`https://e-bazaar-server-three.vercel.app/login`, userInfo)
+          const res = await instance.post(`/login`, userInfo)
           if (res.status === 200) {
             return res?.data.user
           }
@@ -82,7 +83,7 @@ const handler = NextAuth({
      if (account?.provider === "google") {
         try {
          
-          await axios.post("https://e-bazaar-server-three.vercel.app/create/user", {
+          await instance.post("/create/user", {
             name: user.name,
             email: user.email,
             image: user.image,

@@ -42,11 +42,11 @@ const Navbar = () => {
   }
   const navItems = (
     <>
-      <Link href={'/'} className='text-[15px] font-medium leading-6   transition-all duration-300'>Home</Link>
-      <Link href={'/shopping'} className='text-[15px] font-medium leading-6   transition-all duration-300'>Shop</Link>
-      <Link href={'/about'} className='text-[15px] font-medium leading-6   transition-all duration-300'>About Us</Link>
-      <Link href={'/blogs'} className='text-[15px] font-medium leading-6  transition-all duration-300 '>Blog</Link>
-      <Link href={'/contact'} className='text-[15px] font-medium leading-6  transition-all duration-300 '>Contact Us</Link>
+      <Link href={'/'} className='text-[15px] font-bold leading-6   transition-all duration-300'>Home</Link>
+      <Link href={'/shopping'} className='text-lg font-bold leading-6   transition-all duration-300'>Shop</Link>
+      <Link href={'/about'} className='text-lg font-bold leading-6   transition-all duration-300'>About Us</Link>
+      <Link href={'/blogs'} className='text-lg font-bold leading-6  transition-all duration-300 '>Blog</Link>
+      <Link href={'/contact'} className='text-lg font-bold leading-6  transition-all duration-300 '>Contact Us</Link>
 
     </>
   )
@@ -80,13 +80,53 @@ const Navbar = () => {
 
           {/* Icons + Auth Buttons */}
           <div className="flex items-center gap-4">
-            <div className="">
-              <button className=' bg-gray-200 sm:p-2 p-1 rounded-full cursor-pointer dark:text-white text-black dark:bg-gray-700  transition-all duration-300 ' onClick={() => setSearchBox(!searchBox)} ><FaSearch className='text-xl max-sm:text-md' /></button>
+            <div className="flex items-center gap-3">
 
-            </div>
-            <div className="relative bg-gray-200 text-black sm:p-2 p-1 rounded-full cursor-pointer dark:text-white dark:bg-gray-700  transition-all duration-300">
-              <Link href={'/shopping-cart'}><CiShoppingCart className='text-xl max-sm:text-md' /></Link>
-              <span className='absolute -sm:top-0 -top-1 sm:right-1 right-1 font-bold text-sm '>{shoppingCart?.length || 0}</span>
+              {/* SEARCH BUTTON */}
+              <button
+                onClick={() => setSearchBox(!searchBox)}
+                className="
+      btn btn-circle btn-sm
+      bg-base-200 dark:bg-base-300
+      border border-base-300
+      hover:scale-110
+      transition
+    "
+              >
+                <FaSearch className="text-lg" />
+              </button>
+
+              {/* CART */}
+              <Link href="/shopping-cart" className="relative">
+
+                <div
+                  className="
+        btn btn-circle btn-sm
+        bg-base-200 dark:bg-base-300
+        border border-base-300
+        hover:scale-110
+        transition
+      "
+                >
+                  <CiShoppingCart className="text-lg" />
+                </div>
+
+                {/* BADGE */}
+                <span
+                  className="
+        absolute -top-2 -right-2
+        min-w-5 h-5 px-1
+        text-xs font-bold
+        flex items-center justify-center
+        rounded-full
+        bg-black text-white
+        dark:bg-white dark:text-black
+      "
+                >
+                  {shoppingCart?.length || 0}
+                </span>
+              </Link>
+
             </div>
             {/* <div className="relative bg-gray-200 p-2 rounded-full cursor-pointer dark:bg-gray-700 dark:text-white transition-all duration-300">
               <Link href={'/cart'}><CiHeart size={24} /></Link>
@@ -170,7 +210,7 @@ const Navbar = () => {
 
 
       </header>
-    
+
 
 
       <AnimatePresence>

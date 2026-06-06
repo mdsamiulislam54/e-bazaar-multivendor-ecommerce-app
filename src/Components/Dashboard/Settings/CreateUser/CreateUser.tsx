@@ -1,4 +1,5 @@
 "use client"
+import instance from '@/lib/axios';
 import axios, { AxiosError } from 'axios';
 import React, { useState } from 'react'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -33,7 +34,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ onGetUserFn }) => {
         };
 
         try {
-            const res = await axios.post(`https://e-bazaar-server-three.vercel.app/create/user`, userInfo);
+            const res = await instance.post(`/create/user`, userInfo);
 
             if (res.status === 200 || res.status === 201) {
                 toast.success("User created successfully!")

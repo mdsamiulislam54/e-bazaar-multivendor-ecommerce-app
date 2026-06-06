@@ -4,6 +4,7 @@ import OrderTable from '../OrderTable/OrderTable';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import OrderFilter from '../OrderFilter/OrderFilter';
+import instance from '@/lib/axios';
 
 interface IOrder {
     customer: {
@@ -49,8 +50,8 @@ const OrderContainer: React.FC<OrderContainerProps> = ({ orders, getOrders ,setS
     const handleStatusChange = async (orderId: string, status: string) => {
         try {
           
-            const res = await axios.patch(
-                `https://e-bazaar-server-three.vercel.app/admin/orders/payment-status`,
+            const res = await instance.patch(
+                `/admin/orders/payment-status`,
                 {  status, orderId }
             );
 

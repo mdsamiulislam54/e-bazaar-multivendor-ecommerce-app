@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import instance from "@/lib/axios";
 
 interface Products {
     _id: string
@@ -53,7 +54,7 @@ const ProductsUpdate: React.FC<ProductsUpdateProps> = ({
 
         try {
 
-            const res = await axios.patch(`https://e-bazaar-server-three.vercel.app/products?_id=${updateProducts?._id}`, data);
+            const res = await instance.patch(`/products?_id=${updateProducts?._id}`, data);
 
             if (res?.data) {
                 toast.success("Product updated successfully!")

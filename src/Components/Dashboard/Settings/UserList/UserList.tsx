@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import instance from "@/lib/axios";
 
 interface IUserList {
     _id: string;
@@ -41,7 +42,7 @@ const UserList: React.FC<UserListProps> = ({ users, onGetUserFn }) => {
             role: formData.getAll("role"),
         };
         try {
-            const res = await axios.patch(`https://e-bazaar-server-three.vercel.app/admin/user-update/${selectedUser._id}`, updatedUser);
+            const res = await instance.patch(`/admin/user-update/${selectedUser._id}`, updatedUser);
             if (res.status === 200) {
                 toast.success(res.data.message);
                 onGetUserFn()
@@ -74,7 +75,7 @@ const UserList: React.FC<UserListProps> = ({ users, onGetUserFn }) => {
 
         if (result.isConfirmed) {
             try {
-                const res = await axios.delete(`https://e-bazaar-server-three.vercel.app/admin/user-delete/${id}`);
+                const res = await instance.delete(`/admin/user-delete/${id}`);
                 if (res.status === 200) {
                     toast.success(res?.data?.message || "User deleted successfully");
                     onGetUserFn();

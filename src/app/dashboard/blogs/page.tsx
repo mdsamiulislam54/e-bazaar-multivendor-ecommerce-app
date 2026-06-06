@@ -1,4 +1,5 @@
 "use client"
+import instance from "@/lib/axios";
 import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
@@ -82,7 +83,7 @@ const BlogsForm: React.FC = () => {
         e.preventDefault();
         
         try {
-            const res = await axios.post(`https://e-bazaar-server-three.vercel.app/blog`, formData,{withCredentials:true});
+            const res = await instance.post(`/blog`, formData,{withCredentials:true});
             if (res?.status === 200) {
                 toast.success("Blogs post successfull")
             }

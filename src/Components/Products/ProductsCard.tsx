@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { addToCart } from "@/redux/feature/addToCart/addToCart";
 import { RootState } from "@/redux/store";
@@ -6,84 +6,118 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BsFillCartCheckFill } from "react-icons/bs";
+import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { FaStar } from "react-icons/fa";
+
 interface Product {
-
-    title: string;
-    images: string[];
-    price: number;
-    discountPrice?: number;
-    rating?: number;
-    stock?: number;
-    _id: string
-
+  _id: string;
+  title: string;
+  images: string[];
+  price: number;
+  rating?: number;
+  stock?: number;
 }
 
-interface ProductsCardProps {
-    product: Product;
-}
+const ProductsCard: React.FC<{ product: Product }> = ({ product }) => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.value);
 
-const ProductsCard: React.FC<ProductsCardProps> = ({ product }) => {
-    const { title, images, price, rating, stock, _id } = product;
-    const dispatch = useDispatch()
+  const handleCart = () => {
+    const exist = cartItems.find((item) => item._id === product._id);
 
-    const cartItems = useSelector((state: RootState) => state.cart.value);
-    const handledTwoCartItem = (product: Product) => {
-        const exist = cartItems.find((item) => item._id === product._id);
-        if (exist) {
-            toast.info("This item is already in your cart! quantity update");
-        } else {
-            dispatch(addToCart({ ...product, quantity: 1 }));
-            toast.success("Item added to cart!");
-        }
-    };
+    if (exist) {
+      toast.info("Already in cart");
+    } else {
+      dispatch(addToCart({ ...product, quantity: 1 }));
+      toast.success("Added to cart");
+    }
+  };
 
+  return (
+    <div
+      className="
+        card 
+        border border-base-300 dark:border-gray-700
+        shadow-md hover:shadow-xl
+        transition duration-300
+        group
+      "
+    >
 
-    return (
-        <div className="  rounded-lg shadow-sm text-sm   rubik cursor-pointer hover:shadow-lg transition-all duration-300   dark:bg-gray-800">
-            {/* Fixed card width (same size) */}
-            <div className="relative">
-                <Link href={`checkout/${_id}`} className=" sm:h-45 h-[300px] overflow-hidden flex items-center justify-center mx-auto bg-white ">
-                    <Image
-                        src={images[0] || "https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"}
-                        width={100}
-                        height={100}
-                        alt={title}
-                        priority
-                        className=" w-full h-full object-contain rounded-md mx-auto "
-                    />
+      {/* IMAGE FIXED CONTAINER */}
+      <figure className="relative w-full aspect-square overflow-hidden bg-base-200">
 
+        <Image
+          src={
+            product.images?.[0] ||
+            "https://www.shutterstock.com/image-vector/missing-picture-page-website-design-600nw-1552421075.jpg"
+          }
+          alt={product.title}
+          fill
+          className="
+            object-cover
+            group-hover:scale-110
+            transition duration-500
+          "
+        />
 
-                </Link>
-                <button
-                    onClick={() => handledTwoCartItem(product)}
-                    className=" absolute bottom-2 left-2 text-[12px] p-2 bg-gray-800 rounded-full cursor-pointer hover:bg-gray-600 ">
-                    <BsFillCartCheckFill size={14} color="white" />
-                </button>
-            </div>
-            <div className="px-2 mb-2">
-                <h2 className="mt-2 font-medium line-clamp-1 ">{title}</h2>
+        {/* QUICK CART BUTTON */}
+        <button
+          onClick={handleCart}
+          className="
+            absolute bottom-3 left-3
+            btn btn-circle btn-sm btn-neutral
+            opacity-90 hover:opacity-100
+          "
+        >
+          <BsFillCartCheckFill />
+        </button>
 
-                <div className="flex justify-between items-center">
-                    <p className="text-xl my-2 font-bold">৳ {price}</p>
-                    <p className="font-bold flex items-center gap-1  text-yellow-500">
-                        {[...Array(Math.round(rating as number))].map((_, i) => (
-                            <FaStar key={i} />
-                        ))}
-                        <span className="text-gray-700 dark:text-gray-300 ">{rating}</span>
-                    </p>
-                </div>
-                <div className="flex items-center justify-between gap-4">
-                    {stock && <p>{stock} stock</p>}
+      </figure>
 
+      {/* BODY */}
+      <div className="card-body p-3 space-y-2">
 
-                    <Link href={`checkout/${product._id}`} className="px-3 py-1 bg-gray-600 rounded-sm cursor-pointer text-xs text-white">Buy Now</Link>
-                </div>
-            </div>
+        {/* TITLE */}
+        <h2 className="font-semibold line-clamp-1 dark:text-white">
+          {product.title}
+        </h2>
+
+        {/* PRICE + RATING */}
+        <div className="flex justify-between items-center">
+
+          <p className="text-lg font-bold dark:text-white">
+            ৳ {product.price}
+          </p>
+
+          <div className="flex items-center gap-1 text-yellow-500 text-sm">
+            {[...Array(Math.round(product.rating || 0))].map((_, i) => (
+              <FaStar key={i} />
+            ))}
+          </div>
+
         </div>
-    );
+
+        {/* STOCK + CTA */}
+        <div className="flex justify-between items-center">
+
+          <p className="text-xs opacity-70 dark:text-white">
+            {product.stock || 0} in stock
+          </p>
+
+          <Link
+            href={`/checkout/${product._id}`}
+            className="btn btn-xs btn-black dark:btn-white"
+          >
+            Buy Now
+          </Link>
+
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
 export default ProductsCard;

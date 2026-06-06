@@ -7,6 +7,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useDeliveryDate } from '@/hook/useDeliveryDate/useDeliveryDate';
+import instance from '@/lib/axios';
 
 
 interface ProductDetails {
@@ -70,7 +71,7 @@ const Payment: React.FC<PaymentProps> = ({ onClose, products, formData }) => {
     try {
       setLoading(true);
 
-      const res = await axios.post(`https://e-bazaar-server-three.vercel.app/create-payment-intent`,
+      const res = await instance.post(`/create-payment-intent`,
         { amount: products?.totalPrice, id: products?.productId });
       
       const clientSecret = res?.data?.clientSecret;
@@ -135,7 +136,7 @@ const Payment: React.FC<PaymentProps> = ({ onClose, products, formData }) => {
           updatedAt: new Date().toISOString(),
         };
 
-        const res = await axios.post('https://e-bazaar-server-three.vercel.app/order', { orderDetails })
+        const res = await instance.post('/order', { orderDetails })
 
         if (res.status === 200) {
           toast.success('Your Payment Successfully!')

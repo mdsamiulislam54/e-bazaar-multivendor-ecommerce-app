@@ -2,6 +2,7 @@
 import CreateUser from '@/Components/Dashboard/Settings/CreateUser/CreateUser'
 import UserList from '@/Components/Dashboard/Settings/UserList/UserList'
 import Pagination from '@/Components/Pagination/Pagination'
+import instance from '@/lib/axios'
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 interface IUser {
@@ -16,7 +17,7 @@ const SettingPage = () => {
   const [currenPage, setCurrentPage] = useState(1);
   const [pageArray, setPageArray] = useState([])
   const getUser = useCallback(async () => {
-    const res = await axios.get(`https://e-bazaar-server-three.vercel.app/admin/user-list?page=${currenPage}`,{withCredentials:true});
+    const res = await instance.get(`admin/user-list?page=${currenPage}`,{withCredentials:true});
     if (res.status === 200) {
       setUsers(res?.data?.user);
       setPageArray(res?.data?.pageArray)

@@ -12,6 +12,7 @@ import { FcGoogle } from 'react-icons/fc';
 import Logo from '@/Components/Logo/Logo';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import instance from '@/lib/axios';
 
 
 
@@ -39,7 +40,7 @@ const Register = () => {
         };
 
         try {
-            const res = await axios.post(`https://e-bazaar-server-three.vercel.app/create/user`, userInfo);
+            const res = await instance.post(`/create/user`, userInfo);
 
             if (res.status === 200 || res.status === 201) {
                 Swal.fire({
