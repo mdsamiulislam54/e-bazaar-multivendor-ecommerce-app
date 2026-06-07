@@ -1,11 +1,13 @@
-"use client";
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import {  Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import Image from "next/image";
+"use client"
+
+import React from "react"
+import "swiper/css"
+import "swiper/css/pagination"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination, Autoplay } from "swiper/modules"
+
+import Image from "next/image"
+
 const testimonials = [
   {
     name: "Rahim Uddin",
@@ -35,104 +37,116 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/50.jpg",
   },
   {
-    name: "Mitu Akter",
-    date: "2025-01-02",
+    name: "Mousumi Akter",
+    date: "2025-01-05",
     rating: 4,
     description:
-      "The product was good, but delivery took a bit longer than expected. Overall, satisfied.",
+      "The product quality is great and the delivery was on time. Will definitely shop again!",
     location: "Khulna, Bangladesh",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    image: "https://randomuser.me/api/portraits/women/55.jpg",
   },
   {
-    name: "Tanvir Alam",
-    date: "2024-12-22",
+    name: "Fahim Chowdhury",
+    date: "2025-02-01",
     rating: 5,
     description:
-      "Absolutely loved the headphones I bought. Great sound quality at an affordable price.",
+      "I am extremely satisfied with my purchase. The product exceeded my expectations and the customer service was top-notch.",
     location: "Rajshahi, Bangladesh",
-    image: "https://randomuser.me/api/portraits/men/77.jpg",
-  },
-  {
-    name: "Farzana Hossain",
-    date: "2024-12-10",
-    rating: 5,
-    description:
-      "This site is trustworthy. I’ve ordered multiple times and every time I was impressed.",
-    location: "Barishal, Bangladesh",
-    image: "https://randomuser.me/api/portraits/women/12.jpg",
-  },
-  {
-    name: "Sabbir Rahman",
-    date: "2024-11-30",
-    rating: 4,
-    description:
-      "The smartwatch works perfectly. Just wish the battery life was a bit longer.",
-    location: "Rangpur, Bangladesh",
-    image: "https://randomuser.me/api/portraits/men/81.jpg",
+    image: "https://randomuser.me/api/portraits/men/60.jpg",
   },
   {
     name: "Nusrat Jahan",
-    date: "2024-11-20",
+    date: "2025-01-20",
+    rating: 4,
+    description:
+      "The shopping experience was smooth and hassle-free. The product quality is good, and I received it within the expected delivery time.",
+    location: "Barishal, Bangladesh",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+  },
+  {
+    name: "Arif Hossain",
+    date: "2025-01-10",
     rating: 5,
     description:
-      "Amazing shopping platform. The discounts are real, and the products are authentic.",
-    location: "Comilla, Bangladesh",
-    image: "https://randomuser.me/api/portraits/women/25.jpg",
-  },
-];
+      "I am very impressed with the quality of the product and the excellent customer service. I will definitely recommend this store to my friends and family.",
+    location: "Rangpur, Bangladesh",
+    image: "https://randomuser.me/api/portraits/men/70.jpg",
+  }
+]
 
 const Testimonial = () => {
   return (
-    <div className="py-16">
+    <div className="py-16 bg-white dark:bg-black transition-colors">
+
       <div className="container-custom">
-        <h2 className="text-4xl font-bold text-center mb-10 rubik dark:text-white">
+
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-black dark:text-white">
           What Our Customers Say
         </h2>
 
         <Swiper
-          modules={[ Pagination, Autoplay]}
+          modules={[Pagination, Autoplay]}
           spaceBetween={20}
-          
           pagination={{ clickable: true }}
           autoplay={{ delay: 3000 }}
           breakpoints={{
             320: { slidesPerView: 1 },
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
           }}
         >
+
           {testimonials.map((t, index) => (
             <SwiperSlide key={index}>
-              <div className="card  shadow-md hover:shadow-md p-10 rubik  my-10  hover:scale-105 transition-all duration-300 cursor-pointer dark:text-white dark:bg-gray-800 h-[250px]">
-                <div className="flex items-center gap-3 mb-3 ">
-                  <Image src={t.image}
+
+              {/* Card */}
+              <div className="group relative h-65 my-10 p-6 rounded-3xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-black dark:text-white overflow-hidden">
+
+                {/* Glow */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-black/5 dark:bg-white/10 blur-3xl opacity-0 group-hover:opacity-100 transition" />
+
+                {/* User */}
+                <div className="flex items-center gap-3 mb-4">
+
+                  <Image
+                    src={t.image}
                     alt={t.name}
-                    width={100}
-                    height={100}
-                    className="w-14 h-14 rounded-tl-[160px] rounded-tr-[150px]  rounded-bl-[150px] border-b-4 border-gray-800 "
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-full object-cover border border-gray-300 dark:border-gray-700"
                   />
+
                   <div>
                     <h3 className="font-semibold">{t.name}</h3>
-                    <p className="text-xs text-gray-600 dark:text-white">{t.location}</p>
-                    <p className="text-xs text-gray-600 dark:text-white">{t.date}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t.location}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">{t.date}</p>
                   </div>
+
                 </div>
-                <p className="text-sm text-gray-800 mb-2 line-clamp-3 dark:text-white">{t.description}</p>
-                <div className="flex">
+
+                {/* Description */}
+                <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 leading-6">
+                  {t.description}
+                </p>
+
+                {/* Rating */}
+                <div className="flex gap-1 mt-4 text-black dark:text-white">
                   {Array.from({ length: t.rating }).map((_, i) => (
-                    <span key={i} className="text-yellow-600 dark:text-white">
-                      ★
-                    </span>
+                    <span key={i}>★</span>
                   ))}
                 </div>
+
               </div>
+
             </SwiperSlide>
           ))}
-        </Swiper>
-      </div>
-    </div>
-  );
-};
 
-export default Testimonial;
+        </Swiper>
+
+      </div>
+
+    </div>
+  )
+}
+
+export default Testimonial

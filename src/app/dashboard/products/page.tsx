@@ -15,7 +15,7 @@ const ProductsList = () => {
     const [search, setSearch] = useState('')
 
     const getProductsData = useCallback(async () => {
-        const res = await instance.get(`/admin/products/list?page=${currentPage}&sort=${sort}&search=${search}`, {withCredentials:true});
+        const res = await instance.get(`/admin/products/list?page=${currentPage}&sort=${sort}&search=${search}`, { withCredentials: true });
         const data = res?.data;
         setProducts(data?.products);
         setPageArray(data?.pageArray)
@@ -39,9 +39,9 @@ const ProductsList = () => {
                 try {
 
                     const res = await instance.delete(`/admin/products/${id}`);
-                    if(res.status === 200){
-                    toast.success("Your product has been deleted.");
-                    getProductsData();
+                    if (res.status === 200) {
+                        toast.success("Your product has been deleted.");
+                        getProductsData();
                     }
                 } catch (error) {
                     console.error((error as Error).message)
@@ -55,25 +55,25 @@ const ProductsList = () => {
     return (
         <div>
             <div>
-                <div className="flex flex-col justify-between sm:flex-row gap-4 md:items-center  mb-4 bg-white dark:bg-gray-800 dark:text-white p-4">
-                    {/* Search Box */}
-                    <div className="flex items-center md:w-1/2 ">
-                        <div className="relative w-full">
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                onChange={(e) => setSearch(e.target.value)}
-                                className="input pl-10 dark:bg-gray-600 "
-                            />
-                            <FaSearch className="absolute left-3 top-2.5 text-gray-300 w-5 h-5" />
-                        </div>
+                <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between mb-4 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-white/5 backdrop-blur-xl text-black dark:text-white">
+
+                    {/* Search */}
+                    <div className="relative w-full sm:w-1/2">
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                        />
+                        <FaSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-400 w-5 h-5" />
                     </div>
 
-                    {/* Filter Dropdown */}
-                    <div>
+                    {/* Filter */}
+                    <div className="w-full sm:w-auto">
                         <select
                             onChange={(e) => setSort(e.target.value)}
-                            className="select select-bordered w-full max-w-xs dark:bg-gray-600">
+                            className="w-full sm:w-64 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                        >
                             <option value="latest">Latest Products</option>
                             <option value="high-low">High Price Products</option>
                             <option value="low-high">Low Price Products</option>
@@ -81,6 +81,7 @@ const ProductsList = () => {
                             <option value="in_stock">In Stock</option>
                         </select>
                     </div>
+
                 </div>
 
                 <div className='bg-white dark:bg-gray-800 dark:text-white p-4'>

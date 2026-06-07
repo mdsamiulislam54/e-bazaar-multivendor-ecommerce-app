@@ -1,182 +1,179 @@
 "use client"
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { MdPrint } from "react-icons/md";
-import BackButton from '@/Components/Button/BackButton/BackButton';
-import { useReactToPrint } from "react-to-print";
-import axios from 'axios';
-import { Order } from '@/lib/orders';
+
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { MdPrint } from "react-icons/md"
+import BackButton from "@/Components/Button/BackButton/BackButton"
+import { useReactToPrint } from "react-to-print"
+import axios from "axios"
+import { Order } from "@/lib/orders"
+
 const OrderInvoice = () => {
-    const [order, setOrder] = useState<Order | null>(null);
-    const searchParams = useSearchParams();
-    const id = searchParams.get("id");
-    const contentRef = useRef<HTMLDivElement>(null);
-    const reactToPrintFn = useReactToPrint({ contentRef });
+  const [order, setOrder] = useState<Order | null>(null)
+  const searchParams = useSearchParams()
+  const id = searchParams.get("id")
 
-    const getOrderById = useCallback(async () => {
-        const res = await axios.get(`http://localhost:5000/user/order/${id}`);
-        console.log(res)
-        if (res.status === 200) {
-            setOrder(res.data)
-        }
-    }, [])
+  const contentRef = useRef<HTMLDivElement>(null)
+  const reactToPrintFn = useReactToPrint({ contentRef })
 
-    useEffect(()=>{
-        getOrderById();
-    },[])
+  const getOrderById = useCallback(async () => {
+    if (!id) return
+    const res = await axios.get(`http://localhost:5000/user/order/${id}`)
+    if (res.status === 200) setOrder(res.data)
+  }, [id])
 
-    return (
-        <div className='container-custom my-10 min-h-screen'>
-            <BackButton />
-            <div ref={contentRef} className='flex justify-center items-center mt-2 '>
+  useEffect(() => {
+    getOrderById()
+  }, [getOrderById])
 
-                <div className='bg-white dark:bg-gray-800 dark:text-white md:w-[595px] w-full  h-[642px]  p-5 relative overflow-hidden border-2 border-dotted mb-10'>
-                    <div>
-                        <p className='absolute inset-0 flex justify-center dark:text-white items-center text-[8vw] font-bold italic  '>E-Bazaar</p>
-                        <div className='absolute inset-0 bg-white/90 dark:bg-gray-800/90 p-5'>
-                            <div className='flex justify-between gap-4 border-b-2 pb-2 border-dotted'>
-                                <div className='flex-2'>
-                                    <h1 className='font-bold text-3xl  '>INVOICE</h1>
-                                    <div className='mt-4'>
-                                        <p>
-                                            <strong>Biling Number:</strong>
-                                            <span className='text-sm font-light'> {Math.floor(Math.random() * 10000)}</span>
+  return (
+    <div className="container-custom my-10 min-h-screen text-black dark:text-white">
 
-                                        </p>
-                                        <p>
-                                            <strong>Date:</strong>
-                                            <span className='text-sm font-light'> {new Date().toLocaleDateString()} </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className='flex-1'>
-                                    <aside className="flex flex-col items-start space-y-1">
+      <BackButton />
 
-                                        <p className="text-sm ">
-                                            E-Bazaar Industries Ltd.
-                                            <br />
-                                            Providing reliable tech since 2000
-                                        </p>
-                                        <p className='text-sm'>
-                                            Dhaka, Bangladesh
-                                        </p>
-                                    </aside>
-                                </div>
-                            </div>
+      {/* Invoice */}
+      <div ref={contentRef} className="flex justify-center mt-6">
 
-                            <div className='border-b-2 pb-2 border-dotted'>
-                                <h2 className="font-semibold text-lg dark:text-white">
-                                    Customer Information
-                                </h2>
-                                <table className="w-full text-left border-collapse border border-gray-300 dark:border-gray-700 mt-2 text-[12px]">
-                                    <tbody>
-                                        <tr className="border-b border-gray-300 dark:border-gray-700">
-                                            <td className="py-1 px-3 font-medium dark:text-gray-300">
-                                                Name
-                                            </td>
-                                            <td className="py-1 px-3 dark:text-gray-200">
-                                                {order?.customer.name}
-                                            </td>
-                                        </tr>
-                                        <tr className="border-b border-gray-300 dark:border-gray-700">
-                                            <td className="py-1 px-3 font-medium dark:text-gray-300">
-                                                Email
-                                            </td>
-                                            <td className="py-1 px-3 dark:text-gray-200">
-                                                {order?.customer?.email}
-                                            </td>
-                                        </tr>
-                                        <tr className="border-b border-gray-300 dark:border-gray-700">
-                                            <td className="py-1 px-3 font-medium dark:text-gray-300">
-                                                Phone
-                                            </td>
-                                            <td className="py-2 px-3 dark:text-gray-200">
-                                                {order?.customer?.phone || "N/A"}
-                                            </td>
-                                        </tr>
-                                        <tr className="border-b border-gray-300 dark:border-gray-700">
-                                            <td className="py-1 px-3 font-medium dark:text-gray-300">
-                                                Address
-                                            </td>
-                                            <td className="py-1 px-3 dark:text-gray-200">
-                                                {order?.customer.address || "N/A"}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="py-1 px-3 font-medium dark:text-gray-300">
-                                                Delivery Address
-                                            </td>
-                                            <td className="py-1 px-3 dark:text-gray-200">
-                                                {order?.customer?.deliveryAddress || "N/A"}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="mt-6">
-                                <h2 className="font-semibold text-lg dark:text-white">
-                                    Products
-                                </h2>
-                                <table className="w-full text-left border-collapse border border-gray-300 dark:border-gray-700 mt-2 text-[14px]">
-                                    <thead>
-                                        <tr className="bg-gray-100 dark:bg-gray-800">
-                                            <th className="py-2 px-3 border border-gray-300 dark:border-gray-700">Image</th>
-                                            <th className="py-2 px-3 border border-gray-300 dark:border-gray-700">Title</th>
-                                            <th className="py-2 px-3 border border-gray-300 dark:border-gray-700">Quantity</th>
+        <div className="relative w-full md:w-[700px] p-6 rounded-3xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-black shadow-xl overflow-hidden">
 
-                                            <th className="py-2 px-3 border border-gray-300 dark:border-gray-700">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr className="border-b border-gray-300 dark:border-gray-700">
-                                            <td className="py-2 px-3">
-                                                <Image
-                                                    width={100}
-                                                    height={100}
-                                                    src={order?.product?.image}
-                                                    alt={'products images'}
-                                                    className="w-10 h-10 object-cover rounded"
-                                                />
-                                            </td>
-                                            <td className="py-1 px-3 dark:text-gray-200">{order?.product.name}</td>
-                                            <td className="py-1 px-3 dark:text-gray-200">{order?.product.quantity || 1}</td>
+          {/* Background watermark */}
+          <p className="absolute inset-0 flex items-center justify-center text-[10vw] font-bold opacity-5">
+            E-Bazaar
+          </p>
 
-                                            <td className="py-2 px-3 dark:text-gray-200">{order?.product.totalPrice}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+          {/* Header */}
+          <div className="flex justify-between border-b border-gray-200 dark:border-gray-800 pb-4">
 
-                            {/* Total Price */}
-                            <div className="mt-4 flex justify-end">
-                                <div className="text-right dark:text-white">
-                                    <p className="font-semibold text-sm">Total Price: {order?.product.totalPrice} {order?.product.currency || "BDT"}</p>
-                                </div>
-                            </div>
+            <div>
+              <h1 className="text-2xl font-bold">INVOICE</h1>
 
-                            <div className="mt-6 flex justify-start">
-                                <div className="text-center">
-                                    <p className="dark:text-gray-300">Signature</p>
-                                    <p className="font-semibold dark:text-white">
-                                        Md Shamiul Islam
-                                    </p>
-                                </div>
+              <div className="mt-3 text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                <p><strong>Bill No:</strong> {Math.floor(Math.random() * 10000)}</p>
+                <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
+              </div>
+            </div>
 
-                            </div>
+            <div className="text-sm text-right text-gray-600 dark:text-gray-400">
+              <p className="font-medium text-black dark:text-white">E-Bazaar Ltd.</p>
+              <p>Reliable Tech Store</p>
+              <p>Dhaka, Bangladesh</p>
+            </div>
 
-                        </div>
-                    </div>
+          </div>
 
+          {/* Customer */}
+          <div className="mt-5">
+            <h2 className="font-semibold mb-2">Customer Info</h2>
 
-                </div>
+            <div className="grid grid-cols-2 gap-2 text-sm border border-gray-200 dark:border-gray-800 rounded-xl p-3">
+
+              <p className="text-gray-500">Name</p>
+              <p>{order?.customer?.name}</p>
+
+              <p className="text-gray-500">Email</p>
+              <p>{order?.customer?.email}</p>
+
+              <p className="text-gray-500">Phone</p>
+              <p>{order?.customer?.phone || "N/A"}</p>
+
+              <p className="text-gray-500">Address</p>
+              <p>{order?.customer?.address || "N/A"}</p>
+
+              <p className="text-gray-500">Delivery</p>
+              <p>{order?.customer?.deliveryAddress || "N/A"}</p>
 
             </div>
-            <div className='flex justify-end'>
-                <button onClick={reactToPrintFn} className='btn btn-sm' title='Print'><MdPrint size={20} /></button>
+          </div>
+
+          {/* Product */}
+          <div className="mt-6">
+            <h2 className="font-semibold mb-2">Products</h2>
+
+            <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+
+              <table className="w-full text-sm">
+
+                <thead className="bg-gray-100 dark:bg-white/5">
+                  <tr>
+                    <th className="p-3 text-left">Image</th>
+                    <th className="p-3 text-left">Product</th>
+                    <th className="p-3 text-left">Qty</th>
+                    <th className="p-3 text-left">Total</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr className="border-t border-gray-200 dark:border-gray-800">
+
+                    <td className="p-3">
+                      <Image
+                        src={order?.product?.image || ""}
+                        width={40}
+                        height={40}
+                        alt="product"
+                        className="rounded-md object-cover"
+                      />
+                    </td>
+
+                    <td className="p-3">{order?.product?.name}</td>
+                    <td className="p-3">{order?.product?.quantity || 1}</td>
+                    <td className="p-3 font-semibold">
+                      {order?.product?.totalPrice}
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
             </div>
+          </div>
+
+          {/* Total */}
+          <div className="mt-5 flex justify-end">
+            <div className="text-right">
+              <p className="text-lg font-semibold">
+                Total: {order?.product?.totalPrice} {order?.product?.currency || "BDT"}
+              </p>
+            </div>
+          </div>
+
+          {/* Signature */}
+          <div className="mt-10 flex justify-between text-sm text-gray-500 dark:text-gray-400">
+
+            <div>
+              <p>Signature</p>
+              <p className="text-black dark:text-white font-semibold">
+                Md Shamiul Islam
+              </p>
+            </div>
+
+            <div className="text-right">
+              <p>Thank you for shopping!</p>
+            </div>
+
+          </div>
+
         </div>
-    )
+
+      </div>
+
+      {/* Print Button */}
+      <div className="flex justify-end mt-4">
+        <button
+          onClick={reactToPrintFn}
+          className="px-4 py-2 rounded-xl bg-black text-white dark:bg-white dark:text-black flex items-center gap-2 hover:opacity-80 transition"
+        >
+          <MdPrint size={18} />
+          Print
+        </button>
+      </div>
+
+    </div>
+  )
 }
 
 export default OrderInvoice

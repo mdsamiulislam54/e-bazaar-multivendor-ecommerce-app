@@ -42,11 +42,11 @@ const Navbar = () => {
   }
   const navItems = (
     <>
-      <Link href={'/'} className='text-[15px] font-bold leading-6   transition-all duration-300'>Home</Link>
-      <Link href={'/shopping'} className='text-lg font-bold leading-6   transition-all duration-300'>Shop</Link>
-      <Link href={'/about'} className='text-lg font-bold leading-6   transition-all duration-300'>About Us</Link>
-      <Link href={'/blogs'} className='text-lg font-bold leading-6  transition-all duration-300 '>Blog</Link>
-      <Link href={'/contact'} className='text-lg font-bold leading-6  transition-all duration-300 '>Contact Us</Link>
+      <Link href={'/'} className='text-md font-bold leading-6   transition-all duration-300'>Home</Link>
+      <Link href={'/shopping'} className='text-md font-bold leading-6   transition-all duration-300'>Shop</Link>
+      <Link href={'/about'} className='text-md font-bold leading-6   transition-all duration-300'>About Us</Link>
+      <Link href={'/blogs'} className='text-md font-bold leading-6  transition-all duration-300 '>Blog</Link>
+      <Link href={'/contact'} className='text-md font-bold leading-6  transition-all duration-300 '>Contact Us</Link>
 
     </>
   )
@@ -85,13 +85,7 @@ const Navbar = () => {
               {/* SEARCH BUTTON */}
               <button
                 onClick={() => setSearchBox(!searchBox)}
-                className="
-      btn btn-circle btn-sm
-      bg-base-200 dark:bg-base-300
-      border border-base-300
-      hover:scale-110
-      transition
-    "
+                className=" btn btn-circle btn-sm  bg-base-200 dark:bg-base-300  border border-base-300  hover:scale-110  transition"
               >
                 <FaSearch className="text-lg" />
               </button>
@@ -100,27 +94,14 @@ const Navbar = () => {
               <Link href="/shopping-cart" className="relative">
 
                 <div
-                  className="
-        btn btn-circle btn-sm
-        bg-base-200 dark:bg-base-300
-        border border-base-300
-        hover:scale-110
-        transition
-      "
+                  className="btn btn-circle btn-sm bg-base-200 dark:bg-base-300 border border-base-300   hover:scale-110   transition "
                 >
                   <CiShoppingCart className="text-lg" />
                 </div>
 
                 {/* BADGE */}
                 <span
-                  className="
-        absolute -top-2 -right-2
-        min-w-5 h-5 px-1
-        text-xs font-bold
-        flex items-center justify-center
-        rounded-full
-        bg-black text-white
-        dark:bg-white dark:text-black
+                  className="absolute -top-2 -right-2 min-w-5 h-5 px-1 text-xs font-bold flex items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black
       "
                 >
                   {shoppingCart?.length || 0}
@@ -164,24 +145,28 @@ const Navbar = () => {
                         </li>
                       </>
                     ) : (
-                      <div className='flex flex-col gap-4 mb-4 *:hover:bg-gray-300 dark:*:hover:bg-gray-600 *:p-2'>
-                        <li className="flex items-center gap-2">
-                          <User className="text-sm " />
-                          <Link href="/user_profile">My Profile</Link>
+                      <div className="flex flex-col gap-2 p-2">
+
+                        <li className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">
+                          <User className="text-sm" />
+                          <Link href="/user_profile" className="w-full">My Profile</Link>
                         </li>
 
-                        <li className=" flex items-center gap-2">
-                          <ShoppingCart className="text-lg text-gray-800 dark:text-white" />
-                          <Link href="/shopping-cart">My Cart</Link>
+                        <li className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">
+                          <ShoppingCart className="text-sm" />
+                          <Link href="/shopping-cart" className="w-full">My Cart</Link>
                         </li>
-                        <li className="flex items-center gap-2">
+
+                        <li className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">
                           <Box className="text-sm" />
-                          <Link href="/my_orders">My Orders</Link>
+                          <Link href="/my_orders" className="w-full">My Orders</Link>
                         </li>
-                        <li className="flex items-center gap-2">
+
+                        <li className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">
                           <LifeBuoy className="text-sm" />
-                          <Link href="#">Support</Link>
+                          <Link href="#" className="w-full">Support</Link>
                         </li>
+
                       </div>
                     )
                   }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductsUpdate from "./ProductsUpdate";
-import { FolderSync, Trash } from "lucide-react";
+import { Edit, FolderSync, Trash } from "lucide-react";
 import Image from "next/image";
 
 interface Products {
@@ -92,7 +92,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
                     onClick={() => handleUpdate(product)}
                     className="p-2 bg-gray-100 dark:bg-gray-600 cursor-pointer rounded-full hover:text-accent transition-all duration-300 "
                   >
-                    <FolderSync />
+                    <Edit />
                   </button>
                   <button
                     title="Delete"

@@ -1,203 +1,240 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { MdDeleteForever } from "react-icons/md";
-import { decrementQuantity, incrementQuantity, removeAllFromCart, removeFromCart } from '@/redux/feature/addToCart/addToCart';
-import Button from '@/Components/Button/Button';
-import { MdArrowRightAlt } from "react-icons/md";
-import { RootState } from '@/redux/store';
-import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
-import BackButton from '../../../Components/Button/BackButton/BackButton';
-import { useRouter } from 'next/navigation';
+'use client'
 
+import Image from 'next/image'
+import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { MdDeleteForever } from "react-icons/md"
+import { decrementQuantity, incrementQuantity, removeAllFromCart, removeFromCart } from '@/redux/feature/addToCart/addToCart'
+import Button from '@/Components/Button/Button'
+import { MdArrowRightAlt } from "react-icons/md"
+import { RootState } from '@/redux/store'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
+import BackButton from '@/Components/Button/BackButton/BackButton'
+import { useRouter } from 'next/navigation'
 
 interface CartItem {
-  _id: string;
-  title: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  quantity: number;
-  images: string[];
+  _id: string
+  title: string
+  brand: string
+  price: number
+  discountPrice: number
+  quantity: number
+  images: string[]
 }
 
 const ShoppingCart = () => {
-  const cartItems = useSelector((state: RootState) => state.cart.value as CartItem[]);
+  const cartItems = useSelector((state: RootState) => state.cart.value as CartItem[])
   const dispatch = useDispatch()
   const router = useRouter()
-  const subTotal = () => {
-    const total = cartItems.reduce((acc, cart) => acc + cart.price * cart.quantity, 0);
 
-    return total;
-  }
-  const discount = () => {
-    const total = cartItems.reduce((acc, cart) => acc + cart.discountPrice * cart.quantity, 0);
+  const subTotal = () =>
+    cartItems.reduce((acc, cart) => acc + cart.price * cart.quantity, 0)
 
-    return total;
-  }
-
-  const discountPercentage = () => {
-    if (subTotal() === 0) return 0;
-    const discountAmount = subTotal() - discount();
-    return ((discountAmount / subTotal() * 100).toFixed())
-  }
+  const discount = () =>
+    cartItems.reduce((acc, cart) => acc + cart.discountPrice * cart.quantity, 0)
 
   const handleDeleteCartItem = (id: string) => {
+    dispatch(removeFromCart(id))
+    toast.success("Removed from cart")
+  }
 
-    dispatch(removeFromCart(id));
-    toast.success("Your Cart Delete Successfully!")
-
-  };
   const handleDeleteAllCartItem = () => {
     Swal.fire({
-      title: "Are you sure?",
-
-      text: "This item will be removed from your cart!",
+      title: "Remove all items?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#000",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, remove it!",
-
+      cancelButtonColor: "#666",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(removeAllFromCart());
-        toast.success("Your Cart Delete Successfully!")
+        dispatch(removeAllFromCart())
+        toast.success("Cart cleared")
       }
-    });
-  };
+    })
+  }
 
   const handleCheckout = () => {
     router.push(`/checkout/${cartItems[0]._id}`)
   }
+
   const handleCheckoutItem = (_id: string) => {
     router.push(`/checkout/${_id}`)
   }
 
-
-
-
   return (
-    <div className='min-h-screen bg-gray-200 dark:bg-gray-900 dark:text-white'>
-      <div className=''>
-      
-        <nav className='bg-cover w-full h-[200px]' style={{ backgroundImage: `url("https://preview.colorlib.com/theme/cozastore/images/bg-01.jpg.webp")` }}>
-          <h2 className='flex justify-center flex-col gap-4 items-center h-full text-2xl font-bold text-white tracking-wide'>Your Shopping Cart  <BackButton /> </h2>
-           
-        </nav>
-        <div className='container-custom my-10'>
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
 
-          {
-            cartItems.length === 0 ? (<div className="text-center py-20 text-gray-500">
-              Your cart is empty! <Link href="/shop" className="underline text-gray-800">Go Shopping</Link>
-            </div>) : (
-              <div className='grid lg:grid-cols-3 gap-4'>
-                <div className='lg:col-span-2 bg-gray-100 dark:bg-gray-700 p-4 rounded-box '>
-                  <div>
-                    <nav className='flex justify-between bg-base-100 dark:bg-gray-800 p-4 mb-4 rounded-box'>
-                      <h4 className='text-md rubik max-sm:text-sm font-bold'>Your Cart</h4>
-                      <button
-                        onClick={() => handleDeleteAllCartItem()}
-                        className='cursor-pointer hover:text-red-600 transition-all duration-300 max-sm:text-sm font-bold'>Delete</button>
-                    </nav>
-                  </div>
-                  <div>
-                    <ul className='space-y-4 rubik list bg-base-100 dark:bg-gray-800 rounded-box '>
-                      {
-                        cartItems.map((cart) => (
-                          <li key={cart._id} className="sm:flex justify-between items-center"
+      {/* Hero */}
+      {/* Hero */}
+      <div
+        className="h-[220px] bg-cover bg-center relative"
+        style={{
+          backgroundImage: `url("https://preview.colorlib.com/theme/cozastore/images/bg-01.jpg.webp")`,
+        }}
+      >
+        {/* dark overlay */}
+        <div className="absolute inset-0 bg-black/60" />
 
-                          >
-                            <div className='list-row cursor-pointer' onClick={() => handleCheckoutItem(cart._id)}>
-                              <div>
-                                <Image className='size-10 rounded-box shadow object-contain' src={cart.images?.[0] || cart.images?.[1]} width={30} height={30} alt={cart.title} />
+        {/* content */}
+        <div className="relative h-full flex flex-col justify-center items-start px-6 md:px-16 gap-4">
 
-                              </div>
-                              <div>
-                                <p className='tracking-wide'>{cart.title}</p>
-                                <p className='text-sm'> <strong>brand: </strong>{cart.brand}</p>
-                                <div className="text-xs uppercase font-semibold ">৳ {cart.discountPrice}</div>
-                              </div>
-                            </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
+            Your Shopping Cart
+          </h1>
 
-                            <div className='flex justify-center my-2 gap-4 mx-2'>
-                              <div className='flex items-center'>
-                                <button
-                                  onClick={() => dispatch(decrementQuantity(cart._id))}
-                                  className='btn max-sm:btn-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white btn-square'>-</button>
-                                <p className='px-4 font-bold'>{cart?.quantity}</p>
-                                <button
-                                  onClick={() => dispatch(incrementQuantity(cart._id))}
-                                  className='btn max-sm:btn-sm btn-square dark:bg-gray-700 dark:border-gray-600 dark:text-white'>+</button>
-                              </div>
-                              <button
-                                onClick={() => handleDeleteCartItem(cart._id)}
-                                className="btn btn-square max-sm:btn-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <MdDeleteForever size={24} />
+          <div className="text-white/80 text-sm">
+            Manage your items before checkout
+          </div>
 
-                              </button>
-                            </div>
-
-
-                          </li>
-                        ))
-                      }
-                    </ul>
-
-                  </div>
-                </div>
-                <div className='bg-gray-100 dark:bg-gray-700 p-4 rounded-box'>
-                  <div className='bg-base-100 dark:bg-gray-800 p-4 lg:col-span-1 rounded-box '>
-                    <div>
-                      <h4 className='font-bold mb-4 max-sm:text-sm '>Order Summary</h4>
-                      <form className='flex gap-5 mb-8' >
-                        <input type="text" placeholder='Enter Your Coupon Code..' className='py-3 max-sm:py-1 border w-full rounded-box px-4 border-gray-400' />
-                        <Button text={'Apply'} />
-                      </form>
-                      <div className='flex justify-between items-center mb-4'>
-                        <p className='max-sm:text-sm '>SubTotal</p>
-                        <strong>
-                          ৳ {subTotal()}
-                        </strong>
-                      </div>
-                      <div className='flex justify-between items-center mb-4'>
-                        <p className='max-sm:text-sm '>  Discount <strong>({discountPercentage()}%)</strong></p>
-                        <strong className=' '>
-                          ৳ {discount()}
-                        </strong>
-                      </div>
-                      <div className='flex justify-between items-center mb-4'>
-                        <p>Delivery</p>
-                        <strong>
-                          ৳ 100
-                        </strong>
-                      </div>
-                      <div className="divider"></div>
-                      <div className='flex justify-between items-center mb-4'>
-                        <p className='font-medium'>Total</p>
-                        <strong>
-                          ৳ {(discount()) + 100}
-                        </strong>
-                      </div>
-                      <div>
-                        <button
-                          onClick={handleCheckout}
-                          className='flex items-center justify-center gap-4 text-center max-sm:text-sm  container-custom bg-gray-900  text-white cursor-pointer sm:p-4 p-3 rounded-box hover:bg-gray-900'>
-                          Go to Checkout <MdArrowRightAlt />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          }
-
+          <BackButton />
 
         </div>
       </div>
+
+      <div className="container-custom py-10">
+
+        {cartItems.length === 0 ? (
+          <div className="text-center py-20 text-gray-500 dark:text-gray-400">
+            Cart is empty —{" "}
+            <Link href="/shop" className="underline text-black dark:text-white">
+              Go Shopping
+            </Link>
+          </div>
+        ) : (
+
+          <div className="grid lg:grid-cols-3 gap-8">
+
+            {/* LEFT CART ITEMS */}
+            <div className="lg:col-span-2 space-y-4">
+
+              {/* Header */}
+              <div className="flex justify-between items-center p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0b0b0b]">
+                <h2 className="font-bold">Cart Items</h2>
+
+                <button
+                  onClick={handleDeleteAllCartItem}
+                  className="text-sm text-gray-500 hover:text-red-500 transition"
+                >
+                  Clear All
+                </button>
+              </div>
+
+              {/* Items */}
+              <div className="space-y-4">
+
+                {cartItems.map((cart) => (
+
+                  <div
+                    key={cart._id}
+                    className="flex items-center justify-between p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0b0b0b] hover:shadow-lg transition"
+                  >
+
+                    {/* Product */}
+                    <div
+                      onClick={() => handleCheckoutItem(cart._id)}
+                      className="flex items-center gap-4 cursor-pointer"
+                    >
+                      <Image
+                        src={cart.images?.[0] || cart.images?.[1]}
+                        width={60}
+                        height={60}
+                        alt={cart.title}
+                        className="rounded-xl object-contain bg-white dark:bg-black"
+                      />
+
+                      <div>
+                        <p className="font-medium line-clamp-1">{cart.title}</p>
+                        <p className="text-xs text-gray-500">{cart.brand}</p>
+                        <p className="text-sm font-semibold">৳ {cart.discountPrice}</p>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-3">
+
+                      <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-full overflow-hidden">
+
+                        <button
+                          onClick={() => dispatch(decrementQuantity(cart._id))}
+                          className="px-3 py-1 hover:bg-gray-200 dark:hover:bg-gray-800"
+                        >
+                          -
+                        </button>
+
+                        <span className="px-3">{cart.quantity}</span>
+
+                        <button
+                          onClick={() => dispatch(incrementQuantity(cart._id))}
+                          className="px-3 py-1 hover:bg-gray-200 dark:hover:bg-gray-800"
+                        >
+                          +
+                        </button>
+
+                      </div>
+
+                      <button
+                        onClick={() => handleDeleteCartItem(cart._id)}
+                        className="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-red-500 hover:text-white transition"
+                      >
+                        <MdDeleteForever size={18} />
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+            {/* RIGHT SUMMARY */}
+            <div className="lg:col-span-1">
+
+              <div className="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0b0b0b] space-y-4">
+
+                <h2 className="font-bold text-lg">Order Summary</h2>
+
+                <div className="flex justify-between text-sm">
+                  <span>Subtotal</span>
+                  <span>৳ {subTotal()}</span>
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span>Discount</span>
+                  <span>৳ {subTotal() - discount()}</span>
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span>Delivery</span>
+                  <span>৳ 100</span>
+                </div>
+
+                <div className="border-t border-gray-200 dark:border-gray-800 pt-4 flex justify-between font-bold">
+                  <span>Total</span>
+                  <span>৳ {discount() + 100}</span>
+                </div>
+
+                <button
+                  onClick={handleCheckout}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-black text-white dark:bg-white dark:text-black hover:opacity-80 transition"
+                >
+                  Go to Checkout <MdArrowRightAlt />
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
     </div>
   )
 }

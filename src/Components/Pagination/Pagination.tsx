@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { IoIosArrowRoundForward ,IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
+
 type PaginationProps = {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -14,63 +15,52 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   return (
     <div className="flex justify-center mt-8">
-      <nav className="flex items-center gap-1 sm:gap-2">
-        {/* Previous Button */}
+      <nav className="flex items-center gap-2">
+
+        {/* Prev */}
         <button
-          className="px-3 py-1 sm:px-4 sm:py-2 border border-gray-300 rounded-md disabled:opacity-50 text-sm sm:text-base"
           disabled={currentPage === 0}
           onClick={() => setCurrentPage((prev) => prev - 1)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white disabled:opacity-40"
         >
-          <span className="hidden sm:inline"><IoIosArrowRoundBack  size={20}/></span>
-          <span className="sm:hidden">←</span>
+          <IoIosArrowRoundBack size={20} />
         </button>
 
-        {/* Page Numbers */}
-        <div className="flex items-center gap-1">
-          {pageArray?.map((page) => {
-         
-            if (
-              typeof window !== "undefined" &&
-              window.innerWidth < 640 &&
-              page !== 0 &&
-              page !== pageArray.length - 1 &&
-              Math.abs(page - currentPage) > 1
-            ) {
-              if (Math.abs(page - currentPage) === 2) {
-                return (
-                  <span key={page} className="px-2">
-                    ...
-                  </span>
-                );
-              }
-              return null;
-            }
+        {/* Pages */}
+        <div className="flex items-center gap-2">
+          {pageArray.map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`
+                w-10 h-10
+                flex items-center justify-center
+                rounded-full
+                border
+                transition-all
+                duration-200
 
-            return (
-              <button
-                key={page}
-                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-md text-sm sm:text-base ${
+                ${
                   currentPage === page
-                    ? "bg-gray-800 text-white"
-                    : "border border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
-                }`}
-                onClick={() => setCurrentPage(page)}
-              >
-                {page }
-              </button>
-            );
-          })}
+                    ? "bg-black text-white dark:bg-white dark:text-black border-black dark:border-white scale-110"
+                    : "bg-white dark:bg-black text-black dark:text-white border-gray-300 dark:border-gray-700 hover:scale-105"
+                }
+              `}
+            >
+              {page + 1}
+            </button>
+          ))}
         </div>
 
-        {/* Next Button */}
+        {/* Next */}
         <button
-          className="px-3 py-1 sm:px-4 sm:py-2 border border-gray-300 rounded-md disabled:opacity-50 text-sm sm:text-base"
-          disabled={pageArray?.length - 1 === currentPage}
+          disabled={pageArray.length - 1 === currentPage}
           onClick={() => setCurrentPage((prev) => prev + 1)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-black text-black dark:text-white disabled:opacity-40"
         >
-          <span className="hidden sm:inline"><IoIosArrowRoundForward size={20} /></span>
-          <span className="sm:hidden">→</span>
+          <IoIosArrowRoundForward size={20} />
         </button>
+
       </nav>
     </div>
   );
