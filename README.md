@@ -119,13 +119,9 @@ Check out the live version of **E-Bazaar** here:
 git clone https://github.com/mdsamiulislam54/e-bazaar-multivendor-ecommerce-app.git
 cd e-bazaar
 npm install
-.env
-GOOGLE_CLIENT_ID=1096773614086-p02u06e3hihec0r54cbaephb0r6o4t5e.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-NEXTAUTH_SECRET=hhqdhqj3746nsjch892 
-NEXTAUTH_URL=https://e-bazaar-client.vercel.app
-NEXT_PUBLIC_BASE_URL=https://e-bazaar-server-three.vercel.app
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51RkI5QBTArSoquVqDiQtQd3m45kZXO9vvrFLW1vGwxyjIR0Vjs8W3lqDx2PV9Ww7ik0cae983IzgXfJb44QJklht008UglFATX
+
+
+
 
 npm run dev
 
