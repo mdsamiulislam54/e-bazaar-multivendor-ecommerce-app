@@ -24,7 +24,7 @@ export default function DashboardLayout({
 
             <div
 
-              className={`lg:block hidden  transition-all duration-700 fixed h-full bg-white dark:shadow-gray-700 dark:bg-gray-900 dark:text-white z-[100] w-52 shadow`}>
+              className={`lg:block hidden  transition-all duration-700 fixed h-full bg-white dark:shadow-gray-700 dark:bg-gray-900 dark:text-white z-100 w-52 shadow`}>
               <Sidebar />
             </div>
             <AnimatePresence>
@@ -34,7 +34,7 @@ export default function DashboardLayout({
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: -300, opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="fixed top-0 left-0 z-[100] h-full bg-white dark:shadow-gray-700 dark:bg-gray-900 dark:text-white shadow"
+                  className="fixed top-0 left-0 z-100 h-full bg-white dark:shadow-gray-700 dark:bg-gray-900 dark:text-white shadow"
                 >
                   <Sidebar />
                 </motion.div>

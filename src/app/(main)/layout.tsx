@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` relative dark:bg-gray-900`}
+        className={` ${poppins} ${rubik} relative dark:bg-gray-900`}
 
       >
 

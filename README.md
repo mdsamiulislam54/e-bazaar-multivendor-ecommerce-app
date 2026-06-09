@@ -7,7 +7,7 @@ It provides a beautiful user experience with advanced features like product filt
 ## 🌐 Live Demo
 
 Check out the live version of **E-Bazaar** here:  
-[Visit E-Bazaar](https://e-bazaar-client.vercel.app/)
+[Visit E-Bazaar](https://e-baazar-client.vercel.app)
 
 ![E-Bazaar Screenshot](https://i.postimg.cc/GhyKGgfB/e-bazaar.png)
 

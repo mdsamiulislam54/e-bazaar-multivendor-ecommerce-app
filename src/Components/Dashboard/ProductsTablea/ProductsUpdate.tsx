@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
 import instance from "@/lib/axios";
 

@@ -13,7 +13,6 @@ import BackButton from '@/Components/Button/BackButton/BackButton'
 import Payment from '@/Components/Payment/CardPayment/Payment'
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import instance from '@/lib/axios';

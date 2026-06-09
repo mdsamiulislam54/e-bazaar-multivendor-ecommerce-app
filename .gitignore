@@ -43,3 +43,4 @@ next-env.d.ts
 products.json
 
 .vercel
+.env*.local

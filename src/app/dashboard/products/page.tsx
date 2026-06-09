@@ -2,7 +2,6 @@
 import ProductsTable from '@/Components/Dashboard/ProductsTablea/ProductsTablea';
 import Pagination from '@/Components/Pagination/Pagination';
 import instance from '@/lib/axios';
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { toast } from 'react-toastify';

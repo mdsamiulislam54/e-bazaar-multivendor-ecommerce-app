@@ -178,7 +178,7 @@ const CheckoutDescription: React.FC<CheckoutDetailsProps> = ({ products }) => {
               text-[15px]
             "
                                     >
-                                        "{review.comment}"
+                                        {review.comment}
                                     </p>
 
                                     {/* Footer */}

@@ -1,6 +1,6 @@
 "use client"
 import instance from '@/lib/axios';
-import axios, { AxiosError } from 'axios';
+import  { AxiosError } from 'axios';
 import React, { useState } from 'react'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';

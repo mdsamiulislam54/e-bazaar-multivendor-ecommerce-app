@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdDeleteForever } from "react-icons/md"
 import { decrementQuantity, incrementQuantity, removeAllFromCart, removeFromCart } from '@/redux/feature/addToCart/addToCart'
-import Button from '@/Components/Button/Button'
 import { MdArrowRightAlt } from "react-icons/md"
 import { RootState } from '@/redux/store'
 import Swal from 'sweetalert2'

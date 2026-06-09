@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaDollarSign, FaUsers, FaBox, FaShoppingCart } from "react-icons/fa";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";

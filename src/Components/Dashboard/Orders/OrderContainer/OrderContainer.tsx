@@ -2,7 +2,6 @@
 
 import OrderTable from '../OrderTable/OrderTable';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import OrderFilter from '../OrderFilter/OrderFilter';
 import instance from '@/lib/axios';
 

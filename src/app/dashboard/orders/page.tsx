@@ -3,7 +3,6 @@
 import OrderContainer from '@/Components/Dashboard/Orders/OrderContainer/OrderContainer'
 import Pagination from '@/Components/Pagination/Pagination'
 import instance from '@/lib/axios'
-import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 
 const AdminOrdersPage = () => {

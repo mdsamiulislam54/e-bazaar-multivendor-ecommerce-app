@@ -1,6 +1,5 @@
 "use client"
 import instance from "@/lib/axios";
-import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 

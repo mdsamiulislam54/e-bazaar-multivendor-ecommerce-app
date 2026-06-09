@@ -36,7 +36,6 @@ const getTimeLeft = (target: Date): TimeLeft => {
 };
 
 export default function Countdown({
-    targetDate,
     onComplete,
     className = "",
     showLabels = true,

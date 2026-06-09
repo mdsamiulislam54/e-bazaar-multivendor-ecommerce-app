@@ -28,7 +28,7 @@ const ComposedResponsiveContainer: React.FC<ProductsChartProps> = ({
     productsChartData,
 }) => {
     return (
-        <div className="w-full h-[450px] px-4 py-10 bg-white dark:bg-gray-800 dark:text-white shadow rounded-lg ">
+        <div className="w-full h-112.5 px-4 py-10 bg-white dark:bg-gray-800 dark:text-white shadow rounded-lg ">
             <h2 className="text-xl font-bold mb-4">Products Sales Chart</h2>
 
             <ResponsiveContainer width="100%" height="100%">
@@ -63,14 +63,10 @@ const ComposedResponsiveContainer: React.FC<ProductsChartProps> = ({
                     />
 
 
-                    {/* Tooltip */}
-                    <Tooltip
-                        formatter={(value: number) => [`$${value}`,]}
-                        labelFormatter={(label) => `Product: ${label}`}
-                    />
+
 
                     <Legend verticalAlign="top" height={36} />
-
+                    <Tooltip />
                     {/* Area Chart */}
                     <Area
                         type="monotone"
@@ -87,7 +83,7 @@ const ComposedResponsiveContainer: React.FC<ProductsChartProps> = ({
                         fill="#60a5fa"
                     />
 
-                  
+
                 </ComposedChart>
             </ResponsiveContainer>
         </div>

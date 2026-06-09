@@ -3,7 +3,6 @@ import CreateUser from '@/Components/Dashboard/Settings/CreateUser/CreateUser'
 import UserList from '@/Components/Dashboard/Settings/UserList/UserList'
 import Pagination from '@/Components/Pagination/Pagination'
 import instance from '@/lib/axios'
-import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 interface IUser {
   _id:string

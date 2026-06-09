@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductsUpdate from "./ProductsUpdate";
-import { Edit, FolderSync, Trash } from "lucide-react";
+import { Edit,  Trash } from "lucide-react";
 import Image from "next/image";
 
 interface Products {
@@ -13,7 +13,7 @@ interface Products {
   createdAt: string;
 }
 
-// শুধু update এর জন্য দরকারি product interface
+
 interface Product {
   _id: string;
   title: string;

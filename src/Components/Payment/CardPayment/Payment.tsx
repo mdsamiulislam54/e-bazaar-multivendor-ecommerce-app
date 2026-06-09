@@ -2,8 +2,6 @@
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useDeliveryDate } from '@/hook/useDeliveryDate/useDeliveryDate';

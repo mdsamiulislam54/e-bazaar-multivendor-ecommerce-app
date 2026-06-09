@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 import Swal from 'sweetalert2'
 import { FcGoogle } from 'react-icons/fc';
