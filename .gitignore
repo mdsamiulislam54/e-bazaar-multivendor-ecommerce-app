@@ -5,6 +5,7 @@
 /.pnp
 .pnp.*
 .yarn/*
+.env
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
@@ -33,7 +34,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 .env.local
-
+node_modules
+dist
+.env
+.env.local
 # vercel
 .vercel
 
@@ -43,4 +47,4 @@ next-env.d.ts
 products.json
 
 .vercel
-.env*.local
+
